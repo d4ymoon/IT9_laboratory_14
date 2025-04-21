@@ -14,15 +14,15 @@ class PostController extends Controller
      */
 
      public function dashboard()
-     {
-        $posts = Post::where('user_id', auth()->id())->latest()->get();
-         return view('dashboard', compact('posts'));
-     }
+{
+    $posts = Post::where('user_id', auth()->id())->latest()->get();
+    return view('dashboard', compact('posts'));
+}
 
     public function index()
     {
         //
-        $posts = Post::all();
+        $posts = Post::where('user_id', auth()->id())->latest()->get();
         return view('dashboard', compact('posts'));
     }
 
@@ -51,8 +51,7 @@ class PostController extends Controller
 
         Post::create($postData);
     
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
-    }
+        return redirect()->route('dashboard')->with('success', 'Post created successfully.');    }
 
     /**
      * Display the specified resource.
@@ -88,8 +87,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->update($request->all());
 
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
-    }
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully.');    }
     
 
     /**
@@ -101,6 +99,5 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
-    }
+        return redirect()->route('dashboard')->with('success', 'Post deleted successfully.');    }
 }
